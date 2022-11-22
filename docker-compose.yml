@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 1
+      POSTGRES_USER: root
+    volumes:
+      - ./database/templates:/docker-entrypoint-initdb.d
+  apache:
+    build:
+      context: ./docker
+      dockerfile: Apache.Dockerfile
+    volumes:
+      - ./:/var/www/laravel-docker
+    ports:
+      - 81:80
